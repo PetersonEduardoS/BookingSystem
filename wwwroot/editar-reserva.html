@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Reserva</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #36d1dc, #5b86e5);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #5b86e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #417cd1;
+            }
+
+        a {
+            display: block;
+            margin-top: 16px;
+            color: #5b86e5;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Editar Reserva</h2>
+        <form id="formEditarReserva">
+            <select id="usuarioId" required></select>
+            <select id="salaId" required></select>
+            <input type="datetime-local" id="dataInicio" required />
+            <input type="datetime-local" id="dataFim" required />
+            <button type="submit">Salvar Alterações</button>
+        </form>
+        <a href="reservas.html">← Cancelar</a>
+    </div>
+
+    <script>
+    const API = 'https://localhost:7204/api';
+    const id = new URLSearchParams(window.location.search).get('id');
+
+    async function carregarFormulario() {
+      const [usuarios, salas, reserva] = await Promise.all([
+        fetch(`${API}/usuarios`).then(r => r.json()),
+        fetch(`${API}/salas`).then(r => r.json()),
+        fetch(`${API}/reservas/${id}`).then(r => r.json())
+      ]);
+
+      const usuarioSelect = document.getElementById('usuarioId');
+      usuarios.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u.id;
+        opt.textContent = u.nome;
+        if (u.id === reserva.usuarioId) opt.selected = true;
+        usuarioSelect.appendChild(opt);
+      });
+
+      const salaSelect = document.getElementById('salaId');
+      salas.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = s.nome;
+        if (s.id === reserva.salaId) opt.selected = true;
+        salaSelect.appendChild(opt);
+      });
+
+      document.getElementById('dataInicio').value = reserva.dataInicio.slice(0,16);
+      document.getElementById('dataFim').value = reserva.dataFim.slice(0,16);
+    }
+
+    document.getElementById('formEditarReserva').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const dados = {
+        id: parseInt(id),
+        usuarioId: parseInt(document.getElementById('usuarioId').value),
+        salaId: parseInt(document.getElementById('salaId').value),
+        dataInicio: document.getElementById('dataInicio').value,
+        dataFim: document.getElementById('dataFim').value
+      };
+
+      const response = await fetch(`${API}/reservas/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      });
+
+      if (response.ok) {
+        alert("Reserva atualizada com sucesso!");
+        window.location.href = "reservas.html";
+      } else {
+        const erro = await response.text();
+        alert("Erro: " + erro);
+      }
+    });
+
+    carregarFormulario();
+    </script>
+</body>
+</html>

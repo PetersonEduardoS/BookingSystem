@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Editar Sala</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #3a7bd5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #2f66be;
+            }
+
+        .back-btn {
+            background-color: #ccc;
+            color: black;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Editar Sala</h2>
+        <form id="editSalaForm">
+            <input type="text" id="nome" placeholder="Nome da Sala" required />
+            <input type="number" id="capacidade" placeholder="Capacidade" min="1" required />
+            <button type="submit">Salvar</button>
+        </form>
+        <button class="back-btn" onclick="window.location.href='editar-salas.html'">Voltar</button>
+    </div>
+
+    <script>
+        const API = "https://localhost:7204/api";
+        const params = new URLSearchParams(window.location.search);
+        const salaId = params.get("id");
+
+        async function carregarSala() {
+            const token = localStorage.getItem("token");
+            if (!token) return window.location.href = "index.html";
+
+            const res = await fetch(`${API}/salas/${salaId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (!res.ok) return alert("Sala não encontrada.");
+
+            const sala = await res.json();
+            document.getElementById("nome").value = sala.nome;
+            document.getElementById("capacidade").value = sala.capacidade;
+        }
+
+        document.getElementById("editSalaForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const token = localStorage.getItem("token");
+            const nome = document.getElementById("nome").value;
+            const capacidade = parseInt(document.getElementById("capacidade").value);
+
+            const payload = { id: parseInt(salaId), nome, capacidade };
+
+            const res = await fetch(`${API}/salas/${salaId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert("Sala atualizada com sucesso!");
+                window.location.href = "editar-salas.html";
+            } else {
+                alert("Erro ao atualizar sala.");
+            }
+        });
+
+        carregarSala();
+    </script>
+</body>
+</html>

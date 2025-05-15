@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Salas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #36d1dc, #5b86e5);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sala {
+            background-color: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .sala h3 {
+                margin: 0 0 10px;
+            }
+
+            .sala p {
+                margin: 5px 0;
+            }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Salas Cadastradas</h1>
+    <div id="listaSalas"></div>
+    <a href="home.html">← Voltar</a>
+
+    <script>
+    const API = 'https://localhost:7204/api'; 
+
+    async function carregarSalas() {
+      const res = await fetch(`${API}/salas`);
+      const salas = await res.json();
+      const container = document.getElementById('listaSalas');
+      container.innerHTML = '';
+
+      if (salas.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">Nenhuma sala cadastrada.</p>';
+        return;
+      }
+
+      salas.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'sala';
+        div.innerHTML = `
+          <h3>${s.nome}</h3>
+          <p><strong>Capacidade:</strong> ${s.capacidade}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    carregarSalas();
+    </script>
+</body>
+</html>

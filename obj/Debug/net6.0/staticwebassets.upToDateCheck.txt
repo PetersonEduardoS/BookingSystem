@@ -1,0 +1,12 @@
+wwwroot\cadastro.html
+wwwroot\cadastro-sala.html
+wwwroot\editar-reserva.html
+wwwroot\editar-sala.html
+wwwroot\editar-salas.html
+wwwroot\editar-usuario.html
+wwwroot\gerenciar-usuarios.html
+wwwroot\home.html
+wwwroot\index.html
+wwwroot\lista-de-salas.html
+wwwroot\reserva.html
+wwwroot\reservas.html

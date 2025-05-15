@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Sistema de Reservas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3a7bd5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #2f66be;
+            }
+
+        a {
+            display: block;
+            margin-top: 16px;
+            text-decoration: none;
+            color: #3a7bd5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="formLogin">
+            <input type="email" id="emailLogin" placeholder="Email" required />
+            <input type="password" id="senhaLogin" placeholder="Senha" required />
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p style="margin-top: 16px; font-size: 14px;">
+            Não tem conta? <a href="cadastro.html">Cadastre-se</a>
+        </p>
+    </div>
+
+    <script>
+        const API = 'https://localhost:7204/api';
+
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('emailLogin').value;
+            const senha = document.getElementById('senhaLogin').value;
+
+            try {
+                const response = await fetch(`${API}/Login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, senha })
+                });
+
+                if (!response.ok) {
+                    alert('Email ou senha inválidos');
+                    return;
+                }
+
+                const data = await response.json();
+                const token = data.token;
+
+               
+                localStorage.setItem('token', token);
+
+               
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Erro no login:', error);
+                alert('Erro ao tentar logar. Tente novamente mais tarde.');
+            }
+        });
+    </script>
+</body>
+</html>

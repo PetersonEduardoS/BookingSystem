@@ -1,0 +1,217 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\reservas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\reservas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\reserva.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\reserva.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\lista-de-salas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\lista-de-salas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\home.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\home.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\gerenciar-usuarios.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\gerenciar-usuarios.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\editar-usuario.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\editar-usuario.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\editar-salas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\editar-salas.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\editar-sala.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\editar-sala.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\editar-reserva.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\editar-reserva.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\cadastro-sala.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\cadastro-sala.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|c:\\users\\eduardo\\desktop\\bookingsystem - estudos\\bookingsystem\\wwwroot\\cadastro.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{422807FC-A5E8-45B6-A839-57EA8D2696B2}|BookingSystem.csproj|solutionrelative:wwwroot\\cadastro.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 348,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "reservas.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\reservas.html",
+              "RelativeDocumentMoniker": "wwwroot\\reservas.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\reservas.html",
+              "RelativeToolTip": "wwwroot\\reservas.html",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAAAGsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:28:16.222Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "reserva.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\reserva.html",
+              "RelativeDocumentMoniker": "wwwroot\\reserva.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\reserva.html",
+              "RelativeToolTip": "wwwroot\\reserva.html",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAAAFUAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:28:06.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "lista-de-salas.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\lista-de-salas.html",
+              "RelativeDocumentMoniker": "wwwroot\\lista-de-salas.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\lista-de-salas.html",
+              "RelativeToolTip": "wwwroot\\lista-de-salas.html",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAD0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:27:55.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\index.html",
+              "RelativeToolTip": "wwwroot\\index.html",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGoAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:27:41.627Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "home.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\home.html",
+              "RelativeDocumentMoniker": "wwwroot\\home.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\home.html",
+              "RelativeToolTip": "wwwroot\\home.html",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:27:31.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "gerenciar-usuarios.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\gerenciar-usuarios.html",
+              "RelativeDocumentMoniker": "wwwroot\\gerenciar-usuarios.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\gerenciar-usuarios.html",
+              "RelativeToolTip": "wwwroot\\gerenciar-usuarios.html",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAAAJgAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:26:49.248Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "editar-usuario.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-usuario.html",
+              "RelativeDocumentMoniker": "wwwroot\\editar-usuario.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-usuario.html",
+              "RelativeToolTip": "wwwroot\\editar-usuario.html",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:26:42.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "editar-salas.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-salas.html",
+              "RelativeDocumentMoniker": "wwwroot\\editar-salas.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-salas.html",
+              "RelativeToolTip": "wwwroot\\editar-salas.html",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:26:35.224Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "editar-sala.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-sala.html",
+              "RelativeDocumentMoniker": "wwwroot\\editar-sala.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-sala.html",
+              "RelativeToolTip": "wwwroot\\editar-sala.html",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:26:29.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "editar-reserva.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-reserva.html",
+              "RelativeDocumentMoniker": "wwwroot\\editar-reserva.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\editar-reserva.html",
+              "RelativeToolTip": "wwwroot\\editar-reserva.html",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:26:22.659Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "cadastro-sala.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\cadastro-sala.html",
+              "RelativeDocumentMoniker": "wwwroot\\cadastro-sala.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\cadastro-sala.html",
+              "RelativeToolTip": "wwwroot\\cadastro-sala.html",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAE8AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:26:11.548Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "cadastro.html",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\cadastro.html",
+              "RelativeDocumentMoniker": "wwwroot\\cadastro.html",
+              "ToolTip": "C:\\Users\\Eduardo\\Desktop\\BookingSystem - Estudos\\BookingSystem\\wwwroot\\cadastro.html",
+              "RelativeToolTip": "wwwroot\\cadastro.html",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAFgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-15T09:25:58.73Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

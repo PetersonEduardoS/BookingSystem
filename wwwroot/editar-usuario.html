@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuário</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #3a7bd5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #2f66be;
+            }
+
+        .back-btn {
+            margin-top: 10px;
+            background-color: #ccc;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Editar Usuário</h2>
+        <form id="editForm">
+            <input type="text" id="nome" placeholder="Nome" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="password" id="senha" placeholder="Nova Senha (opcional)" />
+            <select id="role">
+                <option value="usuario">Usuário</option>
+                <option value="admin">Administrador</option>
+            </select>
+            <button type="submit">Salvar</button>
+        </form>
+        <button class="back-btn" onclick="window.location.href='gerenciar-usuarios.html'">Voltar</button>
+    </div>
+
+    <script>
+        const API = "https://localhost:7204/api";
+        const params = new URLSearchParams(window.location.search);
+        const userId = params.get("id");
+
+        async function carregarUsuario() {
+            const token = localStorage.getItem("token");
+            if (!token) return window.location.href = "index.html";
+
+            const res = await fetch(`${API}/usuarios/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (!res.ok) return alert("Erro ao carregar usuário.");
+
+            const usuario = await res.json();
+            document.getElementById("nome").value = usuario.nome;
+            document.getElementById("email").value = usuario.email;
+            document.getElementById("role").value = usuario.role || "usuario";
+        }
+
+        document.getElementById("editForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+            const role = document.getElementById("role").value;
+
+            const payload = {
+                id: parseInt(userId),
+                nome,
+                email,
+                role,
+            };
+
+            if (senha.trim()) payload.senha = senha;
+
+            try {
+                const res = await fetch(`${API}/usuarios/${userId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    alert("Usuário atualizado com sucesso!");
+                    window.location.href = "gerenciar-usuarios.html";
+                } else {
+                    alert("Erro ao atualizar usuário.");
+                }
+            } catch (err) {
+                console.error("Erro:", err);
+                alert("Erro ao enviar requisição.");
+            }
+        });
+
+        carregarUsuario();
+    </script>
+</body>
+</html>

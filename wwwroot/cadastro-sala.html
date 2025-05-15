@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Sala - Sistema de Reservas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 24px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0072ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #005acc;
+            }
+
+        a {
+            display: block;
+            margin-top: 16px;
+            text-decoration: none;
+            color: #0072ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastrar Nova Sala</h2>
+        <form id="formSala">
+            <input type="text" id="nomeSala" placeholder="Nome da Sala" required />
+            <input type="number" id="capacidadeSala" placeholder="Capacidade" required />
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="home.html">← Voltar para o início</a>
+    </div>
+
+    <script>
+    const API = 'https://localhost:7204/api'; 
+
+    document.getElementById('formSala').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nomeSala').value;
+      const capacidade = parseInt(document.getElementById('capacidadeSala').value);
+
+      const response = await fetch(`${API}/salas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, capacidade })
+      });
+
+      if (response.ok) {
+        alert("Sala cadastrada com sucesso!");
+        document.getElementById('formSala').reset();
+      } else {
+        const erro = await response.text();
+        alert("Erro ao cadastrar sala: " + erro);
+      }
+    });
+    </script>
+</body>
+</html>

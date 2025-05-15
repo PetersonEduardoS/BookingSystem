@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Editar/Excluir Salas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3a7bd5;
+            color: white;
+        }
+
+        button {
+            padding: 6px 12px;
+            margin-right: 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #ffc107;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            background-color: #ccc;
+            color: #000;
+            display: block;
+            width: 180px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar ou Excluir Salas</h1>
+
+    <table id="salasTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Capacidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button class="back-btn" onclick="window.location.href='home.html'">Voltar</button>
+
+    <script>
+        const API = "https://localhost:7204/api";
+
+        async function carregarSalas() {
+            const token = localStorage.getItem("token");
+            if (!token) return window.location.href = "index.html";
+
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            if (role !== "admin") {
+                alert("Apenas administradores podem acessar esta página.");
+                return window.location.href = "home.html";
+            }
+
+            const res = await fetch(`${API}/salas`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            const salas = await res.json();
+            const tbody = document.querySelector("#salasTable tbody");
+            tbody.innerHTML = "";
+
+            salas.forEach(sala => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${sala.id}</td>
+                    <td>${sala.nome}</td>
+                    <td>${sala.capacidade}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editarSala(${sala.id})">Editar</button>
+                        <button class="delete-btn" onclick="excluirSala(${sala.id})">Excluir</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function editarSala(id) {
+            window.location.href = `editar-sala.html?id=${id}`;
+        }
+
+        async function excluirSala(id) {
+            if (!confirm("Tem certeza que deseja excluir esta sala?")) return;
+
+            const token = localStorage.getItem("token");
+
+            await fetch(`${API}/salas/${id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            location.reload();
+        }
+
+        window.onload = carregarSalas;
+    </script>
+</body>
+</html>

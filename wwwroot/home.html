@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Sistema de Reservas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            color: #333;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #3a7bd5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #2f66be;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo ao Sistema de Reservas</h1>
+
+        <!-- Botões visíveis para todos -->
+        <button class="btn" onclick="location.href='cadastro-sala.html'">Cadastrar Sala</button>
+        <button class="btn" onclick="location.href='lista-de-salas.html'">Lista de Salas</button>
+        <button class="btn" onclick="location.href='reserva.html'">Fazer Reserva</button>
+        <button class="btn" onclick="location.href='reservas.html'">Ver Reservas</button>
+
+
+        <!-- Botões apenas para admin -->
+        <div id="admin-area" style="display: none; margin-top: 20px;">
+            <hr />
+            <h3>Área Administrativa</h3>
+            <button class="btn" onclick="location.href='gerenciar-usuarios.html'">Gerenciar Usuários</button>
+            <button class="btn" onclick="location.href='editar-salas.html'">Editar/Excluir Salas</button>
+        </div>
+        <button class="btn" onclick="logout()" style="background-color: #e74c3c;">Logout</button>
+    </div>
+
+    <script>
+        function getUserRole() {
+            const token = localStorage.getItem("token");
+            if (!token) return null;
+
+            try {
+                const payloadBase64 = token.split('.')[1];
+                const payloadJson = atob(payloadBase64);
+                const payload = JSON.parse(payloadJson);
+
+                return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || null;
+            } catch (e) {
+                console.error("Erro ao decodificar token:", e);
+                return null;
+            }
+        }
+
+        function exibirSecoes() {
+            const role = getUserRole();
+            if (role === "admin") {
+                document.getElementById("admin-area").style.display = "block";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+        }
+
+        window.onload = exibirSecoes;
+    </script>
+</body>
+</html>

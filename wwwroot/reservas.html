@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservas - Sistema</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        .reserva {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .reserva h3 {
+                margin: 0 0 10px;
+            }
+
+            .reserva p {
+                margin: 5px 0;
+            }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Reservas</h1>
+    <div id="listaReservas"></div>
+    <a href="home.html">← Voltar</a>
+
+    <script>
+    const API = 'https://localhost:7204/api'; 
+
+    async function carregarReservas() {
+      const res = await fetch(`${API}/reservas`);
+      const reservas = await res.json();
+      const container = document.getElementById('listaReservas');
+      container.innerHTML = '';
+
+      if (reservas.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:white;">Nenhuma reserva encontrada.</p>';
+        return;
+      }
+
+        reservas.forEach(r => {
+            const div = document.createElement('div');
+            div.className = 'reserva';
+            div.innerHTML = `
+            <h3>${r.usuario.nome} reservou ${r.sala.nome}</h3>
+            <p><strong>Início:</strong> ${formatarData(r.dataInicio)}</p>
+            <p><strong>Fim:</strong> ${formatarData(r.dataFim)}</p>
+            <button onclick="excluirReserva(${r.id})" style="margin-top: 10px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
+              Excluir
+            </button>
+            <button onclick="editarReserva(${r.id})" style="margin-top: 10px; background-color: #f1c40f; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; margin-left: 10px;">
+              Editar
+            </button>
+          `;
+            container.appendChild(div);
+        });
+
+    }
+
+    function formatarData(dataIso) {
+      const data = new Date(dataIso);
+      return data.toLocaleString('pt-BR');
+    }
+
+        async function excluirReserva(id) {
+            if (!confirm('Tem certeza que deseja excluir esta reserva?')) return;
+
+            const response = await fetch(`${API}/reservas/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Reserva excluída com sucesso!');
+                carregarReservas(); 
+            } else {
+                alert('Erro ao excluir reserva.');
+            }
+        }
+
+        function editarReserva(id) {
+            window.location.href = `editar-reserva.html?id=${id}`;
+        }
+
+    carregarReservas();
+    </script>
+</body>
+</html>

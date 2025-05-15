@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gerenciar Usuários</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3a7bd5;
+            color: white;
+        }
+
+        button {
+            padding: 6px 12px;
+            margin-right: 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #ffc107;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+            background-color: #ff4d4d;
+            color: white;
+            display: block;
+            width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerenciar Usuários</h1>
+
+    <table id="usuariosTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button class="logout-btn" onclick="voltarDashboard()">Voltar</button>
+
+
+    <script>
+        const API = 'https://localhost:7204/api';
+
+        async function carregarUsuarios() {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Você precisa estar logado.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const role = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            if (role !== "admin") {
+                alert("Acesso negado. Apenas administradores podem acessar esta página.");
+                window.location.href = "home.html";
+                return;
+            }
+
+
+            try {
+                const res = await fetch(`${API}/usuarios`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const usuarios = await res.json();
+                const tbody = document.querySelector("#usuariosTable tbody");
+
+                usuarios.forEach(usuario => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                            <td>${usuario.id}</td>
+                            <td>${usuario.nome}</td>
+                            <td>${usuario.email}</td>
+                            <td>${usuario.role}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editarUsuario(${usuario.id})">Editar</button>
+                                <button class="delete-btn" onclick="excluirUsuario(${usuario.id})">Excluir</button>
+                            </td>
+                        `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Erro ao carregar usuários:", error);
+                alert("Erro ao carregar dados.");
+            }
+        }
+
+        async function excluirUsuario(id) {
+            if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
+
+            const token = localStorage.getItem("token");
+
+            try {
+                await fetch(`${API}/usuarios/${id}`, {
+                    method: "DELETE",
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                location.reload();
+            } catch (error) {
+                console.error("Erro ao excluir:", error);
+                alert("Erro ao excluir usuário.");
+            }
+        }
+
+        function editarUsuario(id) {
+            alert("Função de edição ainda não implementada.");
+            
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+        }
+
+        function voltarDashboard() {
+            window.location.href = "home.html";
+        }
+
+        function editarUsuario(id) {
+            window.location.href = `editar-usuario.html?id=${id}`;
+        }
+
+
+        window.onload = carregarUsuarios;
+    </script>
+</body>
+</html>
