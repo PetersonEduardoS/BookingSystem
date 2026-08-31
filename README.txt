@@ -34,8 +34,8 @@ How to Run the Project
 
 2. Clone the repository:
 ```bash
-git clone https://github.com/your-username/room-reservation-system.git
-cd room-reservation-system
+git clone https://github.com/PetersonEduardoS/BookingSystem.git
+cd BookingSystem
 ```
 
 3. Apply database migrations:
