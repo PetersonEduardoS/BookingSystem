@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookingSystem.Data;
 using BookingSystem.Models;
@@ -30,6 +31,7 @@ namespace BookingSystem.Controllers
             return sala;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Sala>> PostSala(Sala sala)
         {
@@ -38,6 +40,7 @@ namespace BookingSystem.Controllers
             return CreatedAtAction(nameof(GetSala), new { id = sala.Id }, sala);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSala(int id, Sala updatedSala)
         {
@@ -51,6 +54,7 @@ namespace BookingSystem.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSala(int id)
         {
