@@ -35,18 +35,20 @@ namespace BookingSystem.Controllers
             var email = request.Email.Trim().ToLower();
             var usuario = _context.Usuarios.FirstOrDefault(u => u.Email.ToLower().Trim() == email);
 
-            _logger.LogInformation("Email recebido: {Email}", email);
-            _logger.LogInformation("Senha recebida: {Senha}", request.Senha);
-            _logger.LogInformation("Hash no banco: {Hash}", usuario?.SenhaHash ?? "null");
-
             if (usuario == null || string.IsNullOrEmpty(usuario.SenhaHash))
+            {
+                _logger.LogWarning("Failed login attempt for {Email}", email);
                 return Unauthorized("Email ou senha inválidos");
+            }
 
             // Verificação com BCrypt
             bool senhaOk = BCrypt.Net.BCrypt.Verify(request.Senha, usuario.SenhaHash);
 
             if (!senhaOk)
+            {
+                _logger.LogWarning("Failed login attempt for {Email}", email);
                 return Unauthorized("Email ou senha inválidos");
+            }
 
             var token = GerarToken(usuario);
             return Ok(new { token });
