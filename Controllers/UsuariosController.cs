@@ -17,12 +17,14 @@ namespace BookingSystem.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             return await _context.Usuarios.ToListAsync();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
@@ -71,6 +73,7 @@ namespace BookingSystem.Controllers
             });
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, [FromBody] UsuarioRequest request)
         {
