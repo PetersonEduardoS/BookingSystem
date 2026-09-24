@@ -6,9 +6,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Conexão com o banco
+// Database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=reservas.db";
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=reservas.db"));
+    options.UseSqlite(connectionString));
 
 // Swagger, Controllers
 builder.Services.AddControllers();
@@ -42,6 +43,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+// Apply pending migrations and seed demo data when the database is empty
+await DbSeeder.SeedAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {
