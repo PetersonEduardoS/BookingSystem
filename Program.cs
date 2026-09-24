@@ -7,7 +7,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=reservas.db";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=bookingsystem.db";
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 
