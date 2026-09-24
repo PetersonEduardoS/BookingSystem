@@ -74,6 +74,28 @@ namespace BookingSystem.Controllers
             return CreatedAtAction(nameof(GetReserva), new { id = reserva.Id }, reserva);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutReserva(int id, Reserva updated)
+        {
+            var reserva = await _context.Reservas.FindAsync(id);
+            if (reserva == null) return NotFound();
+            if (!IsAdmin && reserva.UsuarioId != CurrentUserId) return Forbid();
+
+            var validationError = await ValidateReservaAsync(updated.SalaId, updated.DataInicio, updated.DataFim, ignoreReservaId: id);
+            if (validationError != null)
+            {
+                return BadRequest(validationError);
+            }
+
+            // Only room and dates can change; the owner of the reservation stays the same
+            reserva.SalaId = updated.SalaId;
+            reserva.DataInicio = updated.DataInicio;
+            reserva.DataFim = updated.DataFim;
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReserva(int id)
         {
