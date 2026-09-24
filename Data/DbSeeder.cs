@@ -36,14 +36,14 @@ namespace BookingSystem.Data
                 return;
             }
 
-            if (!await context.Usuarios.AnyAsync(u => u.Email == adminEmail))
+            if (!await context.Users.AnyAsync(u => u.Email == adminEmail))
             {
-                context.Usuarios.Add(new Usuario
+                context.Users.Add(new User
                 {
-                    Nome = "Administrator",
+                    Name = "Administrator",
                     Email = adminEmail,
                     Role = "admin",
-                    SenhaHash = BCrypt.Net.BCrypt.HashPassword(adminPassword)
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword)
                 });
 
                 await context.SaveChangesAsync();

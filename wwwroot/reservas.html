@@ -84,7 +84,7 @@
             const div = document.createElement('div');
             div.className = 'reserva';
             div.innerHTML = `
-            <h3>${r.usuario.nome} reservou ${r.room.name}</h3>
+            <h3>${r.user.name} reservou ${r.room.name}</h3>
             <p><strong>Início:</strong> ${formatarData(r.dataInicio)}</p>
             <p><strong>Fim:</strong> ${formatarData(r.dataFim)}</p>
             <button onclick="excluirReserva(${r.id})" style="margin-top: 10px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">

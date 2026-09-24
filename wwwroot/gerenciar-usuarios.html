@@ -105,7 +105,7 @@
 
 
             try {
-                const res = await fetch(`${API}/usuarios`, {
+                const res = await fetch(`${API}/users`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const usuarios = await res.json();
@@ -115,7 +115,7 @@
                     const row = document.createElement("tr");
                     row.innerHTML = `
                             <td>${usuario.id}</td>
-                            <td>${usuario.nome}</td>
+                            <td>${usuario.name}</td>
                             <td>${usuario.email}</td>
                             <td>${usuario.role}</td>
                             <td>
@@ -137,7 +137,7 @@
             const token = localStorage.getItem("token");
 
             try {
-                await fetch(`${API}/usuarios/${id}`, {
+                await fetch(`${API}/users/${id}`, {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` }
                 });

@@ -7,7 +7,7 @@ namespace BookingSystem.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
 
@@ -15,9 +15,9 @@ namespace BookingSystem.Data
         {
             // Configura os relacionamentos
             modelBuilder.Entity<Reserva>()
-                .HasOne(r => r.Usuario)
+                .HasOne(r => r.User)
                 .WithMany()
-                .HasForeignKey(r => r.UsuarioId);
+                .HasForeignKey(r => r.UserId);
 
             modelBuilder.Entity<Reserva>()
                 .HasOne(r => r.Room)

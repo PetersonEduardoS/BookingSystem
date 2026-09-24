@@ -27,14 +27,14 @@ namespace BookingSystem.Controllers
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservas()
         {
             var query = _context.Reservas
-                .Include(r => r.Usuario)
+                .Include(r => r.User)
                 .Include(r => r.Room)
                 .AsQueryable();
 
             if (!IsAdmin)
             {
                 var userId = CurrentUserId;
-                query = query.Where(r => r.UsuarioId == userId);
+                query = query.Where(r => r.UserId == userId);
             }
 
             return await query.ToListAsync();
@@ -44,12 +44,12 @@ namespace BookingSystem.Controllers
         public async Task<ActionResult<Reserva>> GetReserva(int id)
         {
             var reserva = await _context.Reservas
-                .Include(r => r.Usuario)
+                .Include(r => r.User)
                 .Include(r => r.Room)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (reserva == null) return NotFound();
-            if (!IsAdmin && reserva.UsuarioId != CurrentUserId) return Forbid();
+            if (!IsAdmin && reserva.UserId != CurrentUserId) return Forbid();
 
             return reserva;
         }
@@ -58,8 +58,8 @@ namespace BookingSystem.Controllers
         public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
         {
             // The reservation always belongs to the logged-in user, never to an id sent by the client
-            reserva.UsuarioId = CurrentUserId;
-            reserva.Usuario = null;
+            reserva.UserId = CurrentUserId;
+            reserva.User = null;
             reserva.Room = null;
 
             var validationError = await ValidateReservaAsync(reserva.RoomId, reserva.DataInicio, reserva.DataFim);
@@ -79,7 +79,7 @@ namespace BookingSystem.Controllers
         {
             var reserva = await _context.Reservas.FindAsync(id);
             if (reserva == null) return NotFound();
-            if (!IsAdmin && reserva.UsuarioId != CurrentUserId) return Forbid();
+            if (!IsAdmin && reserva.UserId != CurrentUserId) return Forbid();
 
             var validationError = await ValidateReservaAsync(updated.RoomId, updated.DataInicio, updated.DataFim, ignoreReservaId: id);
             if (validationError != null)
@@ -101,7 +101,7 @@ namespace BookingSystem.Controllers
         {
             var reserva = await _context.Reservas.FindAsync(id);
             if (reserva == null) return NotFound();
-            if (!IsAdmin && reserva.UsuarioId != CurrentUserId) return Forbid();
+            if (!IsAdmin && reserva.UserId != CurrentUserId) return Forbid();
 
             _context.Reservas.Remove(reserva);
             await _context.SaveChangesAsync();

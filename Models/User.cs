@@ -2,16 +2,16 @@
 
 namespace BookingSystem.Models
 {
-    public class Usuario
+    public class User
     {
         public int Id { get; set; }
-        public string Nome { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
 
-        public string Role { get; set; } = "usuario";
+        public string Role { get; set; } = "user";
 
         // Never serialize the password hash in API responses
         [JsonIgnore]
-        public string SenhaHash { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
     }
 }

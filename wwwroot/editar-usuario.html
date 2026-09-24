@@ -69,7 +69,7 @@
             <input type="email" id="email" placeholder="Email" required />
             <input type="password" id="senha" placeholder="Nova Senha (opcional)" />
             <select id="role">
-                <option value="usuario">Usuário</option>
+                <option value="user">Usuário</option>
                 <option value="admin">Administrador</option>
             </select>
             <button type="submit">Salvar</button>
@@ -86,16 +86,16 @@
             const token = localStorage.getItem("token");
             if (!token) return window.location.href = "index.html";
 
-            const res = await fetch(`${API}/usuarios/${userId}`, {
+            const res = await fetch(`${API}/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
             if (!res.ok) return alert("Erro ao carregar usuário.");
 
             const usuario = await res.json();
-            document.getElementById("nome").value = usuario.nome;
+            document.getElementById("nome").value = usuario.name;
             document.getElementById("email").value = usuario.email;
-            document.getElementById("role").value = usuario.role || "usuario";
+            document.getElementById("role").value = usuario.role || "user";
         }
 
         document.getElementById("editForm").addEventListener("submit", async (e) => {
@@ -110,16 +110,15 @@
             const role = document.getElementById("role").value;
 
             const payload = {
-                id: parseInt(userId),
-                nome,
+                name: nome,
                 email,
                 role,
             };
 
-            if (senha.trim()) payload.senha = senha;
+            if (senha.trim()) payload.password = senha;
 
             try {
-                const res = await fetch(`${API}/usuarios/${userId}`, {
+                const res = await fetch(`${API}/users/${userId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
