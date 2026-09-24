@@ -55,7 +55,8 @@ namespace BookingSystem.Controllers
                 Nome = request.Nome.Trim(),
                 Email = emailNormalizado,
                 SenhaHash = BCrypt.Net.BCrypt.HashPassword(request.Senha),
-                Role = string.IsNullOrWhiteSpace(request.Role) ? "usuario" : request.Role.ToLower()
+                // Public sign-up always creates a regular user; roles are changed only by an admin
+                Role = "usuario"
             };
 
             _context.Usuarios.Add(usuario);
