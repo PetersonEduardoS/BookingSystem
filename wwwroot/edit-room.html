@@ -69,7 +69,7 @@
             <input type="number" id="capacidade" placeholder="Capacidade" min="1" required />
             <button type="submit">Salvar</button>
         </form>
-        <button class="back-btn" onclick="window.location.href='editar-salas.html'">Voltar</button>
+        <button class="back-btn" onclick="window.location.href='manage-rooms.html'">Voltar</button>
     </div>
 
     <script>
@@ -112,7 +112,7 @@
 
             if (res.ok) {
                 alert("Sala atualizada com sucesso!");
-                window.location.href = "editar-salas.html";
+                window.location.href = "manage-rooms.html";
             } else {
                 alert("Erro ao atualizar sala.");
             }

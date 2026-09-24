@@ -70,7 +70,7 @@
             <input type="datetime-local" id="dataFim" required />
             <button type="submit">Salvar Alterações</button>
         </form>
-        <a href="reservas.html">← Cancelar</a>
+        <a href="bookings.html">← Cancelar</a>
     </div>
 
     <script>
@@ -87,7 +87,7 @@
 
       if (!reservaRes.ok) {
         alert("Você não tem permissão para editar esta reserva ou ela não existe.");
-        window.location.href = "reservas.html";
+        window.location.href = "bookings.html";
         return;
       }
 
@@ -127,7 +127,7 @@
 
       if (response.ok) {
         alert("Reserva atualizada com sucesso!");
-        window.location.href = "reservas.html";
+        window.location.href = "bookings.html";
       } else {
         const erro = await response.text();
         alert("Erro: " + erro);
