@@ -60,9 +60,17 @@
 
     <script>
     const API = 'https://localhost:7204/api'; 
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = 'index.html';
 
     async function carregarReservas() {
-      const res = await fetch(`${API}/reservas`);
+      const res = await fetch(`${API}/reservas`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.status === 401) {
+        window.location.href = 'index.html';
+        return;
+      }
       const reservas = await res.json();
       const container = document.getElementById('listaReservas');
       container.innerHTML = '';
@@ -100,7 +108,8 @@
             if (!confirm('Tem certeza que deseja excluir esta reserva?')) return;
 
             const response = await fetch(`${API}/reservas/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` }
             });
 
             if (response.ok) {

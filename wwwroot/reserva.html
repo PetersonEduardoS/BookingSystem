@@ -69,9 +69,6 @@
     <div class="container">
         <h2>Fazer Reserva</h2>
         <form id="formReserva">
-            <select id="usuarioId" required>
-                <option value="">Selecione o usuário</option>
-            </select>
             <select id="salaId" required>
                 <option value="">Selecione a sala</option>
             </select>
@@ -84,18 +81,8 @@
 
     <script>
     const API = 'https://localhost:7204/api';
-
-    async function carregarUsuarios() {
-      const res = await fetch(`${API}/usuarios`);
-      const usuarios = await res.json();
-      const select = document.getElementById('usuarioId');
-      usuarios.forEach(u => {
-        const option = document.createElement('option');
-        option.value = u.id;
-        option.textContent = u.nome;
-        select.appendChild(option);
-      });
-    }
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = 'index.html';
 
     async function carregarSalas() {
       const res = await fetch(`${API}/salas`);
@@ -113,7 +100,6 @@
       e.preventDefault();
 
       const reserva = {
-        usuarioId: parseInt(document.getElementById('usuarioId').value),
         salaId: parseInt(document.getElementById('salaId').value),
         dataInicio: document.getElementById('dataInicio').value,
         dataFim: document.getElementById('dataFim').value
@@ -121,7 +107,10 @@
 
       const response = await fetch(`${API}/reservas`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(reserva)
       });
 
@@ -134,7 +123,6 @@
       }
     });
 
-    carregarUsuarios();
     carregarSalas();
     </script>
 </body>
