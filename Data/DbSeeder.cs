@@ -14,14 +14,14 @@ namespace BookingSystem.Data
 
             await context.Database.MigrateAsync();
 
-            if (!await context.Salas.AnyAsync())
+            if (!await context.Rooms.AnyAsync())
             {
-                context.Salas.AddRange(
-                    new Sala { Nome = "Rubi", Capacidade = 500 },
-                    new Sala { Nome = "Esmeralda", Capacidade = 150 },
-                    new Sala { Nome = "Gold", Capacidade = 200 },
-                    new Sala { Nome = "Safira", Capacidade = 250 },
-                    new Sala { Nome = "Silver", Capacidade = 50 });
+                context.Rooms.AddRange(
+                    new Room { Name = "Rubi", Capacity = 500 },
+                    new Room { Name = "Esmeralda", Capacity = 150 },
+                    new Room { Name = "Gold", Capacity = 200 },
+                    new Room { Name = "Safira", Capacity = 250 },
+                    new Room { Name = "Silver", Capacity = 50 });
 
                 await context.SaveChangesAsync();
                 logger.LogInformation("Seeded demo rooms.");

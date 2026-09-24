@@ -87,13 +87,13 @@
       const nome = document.getElementById('nomeSala').value;
       const capacidade = parseInt(document.getElementById('capacidadeSala').value);
 
-      const response = await fetch(`${API}/salas`, {
+      const response = await fetch(`${API}/rooms`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ nome, capacidade })
+        body: JSON.stringify({ name: nome, capacity: capacidade })
       });
 
       if (response.ok) {

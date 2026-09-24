@@ -81,15 +81,15 @@
             const token = localStorage.getItem("token");
             if (!token) return window.location.href = "index.html";
 
-            const res = await fetch(`${API}/salas/${salaId}`, {
+            const res = await fetch(`${API}/rooms/${salaId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
             if (!res.ok) return alert("Sala não encontrada.");
 
             const sala = await res.json();
-            document.getElementById("nome").value = sala.nome;
-            document.getElementById("capacidade").value = sala.capacidade;
+            document.getElementById("nome").value = sala.name;
+            document.getElementById("capacidade").value = sala.capacity;
         }
 
         document.getElementById("editSalaForm").addEventListener("submit", async (e) => {
@@ -99,9 +99,9 @@
             const nome = document.getElementById("nome").value;
             const capacidade = parseInt(document.getElementById("capacidade").value);
 
-            const payload = { id: parseInt(salaId), nome, capacidade };
+            const payload = { id: parseInt(salaId), name: nome, capacity: capacidade };
 
-            const res = await fetch(`${API}/salas/${salaId}`, {
+            const res = await fetch(`${API}/rooms/${salaId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

@@ -28,7 +28,7 @@ namespace BookingSystem.Controllers
         {
             var query = _context.Reservas
                 .Include(r => r.Usuario)
-                .Include(r => r.Sala)
+                .Include(r => r.Room)
                 .AsQueryable();
 
             if (!IsAdmin)
@@ -45,7 +45,7 @@ namespace BookingSystem.Controllers
         {
             var reserva = await _context.Reservas
                 .Include(r => r.Usuario)
-                .Include(r => r.Sala)
+                .Include(r => r.Room)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (reserva == null) return NotFound();
@@ -60,9 +60,9 @@ namespace BookingSystem.Controllers
             // The reservation always belongs to the logged-in user, never to an id sent by the client
             reserva.UsuarioId = CurrentUserId;
             reserva.Usuario = null;
-            reserva.Sala = null;
+            reserva.Room = null;
 
-            var validationError = await ValidateReservaAsync(reserva.SalaId, reserva.DataInicio, reserva.DataFim);
+            var validationError = await ValidateReservaAsync(reserva.RoomId, reserva.DataInicio, reserva.DataFim);
             if (validationError != null)
             {
                 return BadRequest(validationError);
@@ -81,14 +81,14 @@ namespace BookingSystem.Controllers
             if (reserva == null) return NotFound();
             if (!IsAdmin && reserva.UsuarioId != CurrentUserId) return Forbid();
 
-            var validationError = await ValidateReservaAsync(updated.SalaId, updated.DataInicio, updated.DataFim, ignoreReservaId: id);
+            var validationError = await ValidateReservaAsync(updated.RoomId, updated.DataInicio, updated.DataFim, ignoreReservaId: id);
             if (validationError != null)
             {
                 return BadRequest(validationError);
             }
 
             // Only room and dates can change; the owner of the reservation stays the same
-            reserva.SalaId = updated.SalaId;
+            reserva.RoomId = updated.RoomId;
             reserva.DataInicio = updated.DataInicio;
             reserva.DataFim = updated.DataFim;
 
@@ -111,14 +111,14 @@ namespace BookingSystem.Controllers
 
         // Shared rules for creating and updating a reservation.
         // ignoreReservaId excludes the reservation being edited from the conflict check.
-        private async Task<string?> ValidateReservaAsync(int salaId, DateTime dataInicio, DateTime dataFim, int? ignoreReservaId = null)
+        private async Task<string?> ValidateReservaAsync(int roomId, DateTime dataInicio, DateTime dataFim, int? ignoreReservaId = null)
         {
             if (dataFim <= dataInicio)
             {
                 return "A data de fim deve ser posterior à data de início.";
             }
 
-            if (!await _context.Salas.AnyAsync(s => s.Id == salaId))
+            if (!await _context.Rooms.AnyAsync(s => s.Id == roomId))
             {
                 return "Sala não encontrada.";
             }
@@ -126,7 +126,7 @@ namespace BookingSystem.Controllers
             var conflito = await _context.Reservas
                 .AnyAsync(r =>
                     r.Id != ignoreReservaId &&
-                    r.SalaId == salaId &&
+                    r.RoomId == roomId &&
                     r.DataInicio < dataFim &&
                     dataInicio < r.DataFim);
 

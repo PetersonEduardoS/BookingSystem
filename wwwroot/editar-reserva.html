@@ -81,7 +81,7 @@
 
     async function carregarFormulario() {
       const [salasRes, reservaRes] = await Promise.all([
-        fetch(`${API}/salas`),
+        fetch(`${API}/rooms`),
         fetch(`${API}/reservas/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
@@ -98,8 +98,8 @@
       salas.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s.id;
-        opt.textContent = s.nome;
-        if (s.id === reserva.salaId) opt.selected = true;
+        opt.textContent = s.name;
+        if (s.id === reserva.roomId) opt.selected = true;
         salaSelect.appendChild(opt);
       });
 
@@ -111,7 +111,7 @@
       e.preventDefault();
 
       const dados = {
-        salaId: parseInt(document.getElementById('salaId').value),
+        roomId: parseInt(document.getElementById('salaId').value),
         dataInicio: document.getElementById('dataInicio').value,
         dataFim: document.getElementById('dataFim').value
       };

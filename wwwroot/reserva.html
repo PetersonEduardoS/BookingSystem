@@ -85,13 +85,13 @@
     if (!token) window.location.href = 'index.html';
 
     async function carregarSalas() {
-      const res = await fetch(`${API}/salas`);
+      const res = await fetch(`${API}/rooms`);
       const salas = await res.json();
       const select = document.getElementById('salaId');
       salas.forEach(s => {
         const option = document.createElement('option');
         option.value = s.id;
-        option.textContent = `${s.nome} (cap: ${s.capacidade})`;
+        option.textContent = `${s.name} (cap: ${s.capacity})`;
         select.appendChild(option);
       });
     }
@@ -100,7 +100,7 @@
       e.preventDefault();
 
       const reserva = {
-        salaId: parseInt(document.getElementById('salaId').value),
+        roomId: parseInt(document.getElementById('salaId').value),
         dataInicio: document.getElementById('dataInicio').value,
         dataFim: document.getElementById('dataFim').value
       };

@@ -8,7 +8,7 @@ namespace BookingSystem.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Sala> Salas { get; set; }
+        public DbSet<Room> Rooms { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,9 +20,9 @@ namespace BookingSystem.Data
                 .HasForeignKey(r => r.UsuarioId);
 
             modelBuilder.Entity<Reserva>()
-                .HasOne(r => r.Sala)
+                .HasOne(r => r.Room)
                 .WithMany()
-                .HasForeignKey(r => r.SalaId);
+                .HasForeignKey(r => r.RoomId);
         }
     }
 }

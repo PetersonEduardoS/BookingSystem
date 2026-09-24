@@ -96,7 +96,7 @@
                 return window.location.href = "home.html";
             }
 
-            const res = await fetch(`${API}/salas`, {
+            const res = await fetch(`${API}/rooms`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -108,8 +108,8 @@
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${sala.id}</td>
-                    <td>${sala.nome}</td>
-                    <td>${sala.capacidade}</td>
+                    <td>${sala.name}</td>
+                    <td>${sala.capacity}</td>
                     <td>
                         <button class="edit-btn" onclick="editarSala(${sala.id})">Editar</button>
                         <button class="delete-btn" onclick="excluirSala(${sala.id})">Excluir</button>
@@ -128,7 +128,7 @@
 
             const token = localStorage.getItem("token");
 
-            await fetch(`${API}/salas/${id}`, {
+            await fetch(`${API}/rooms/${id}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
             });
