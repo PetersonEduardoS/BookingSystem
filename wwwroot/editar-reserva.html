@@ -65,7 +65,6 @@
     <div class="container">
         <h2>Editar Reserva</h2>
         <form id="formEditarReserva">
-            <select id="usuarioId" required></select>
             <select id="salaId" required></select>
             <input type="datetime-local" id="dataInicio" required />
             <input type="datetime-local" id="dataFim" required />
@@ -77,22 +76,23 @@
     <script>
     const API = 'https://localhost:7204/api';
     const id = new URLSearchParams(window.location.search).get('id');
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = 'index.html';
 
     async function carregarFormulario() {
-      const [usuarios, salas, reserva] = await Promise.all([
-        fetch(`${API}/usuarios`).then(r => r.json()),
-        fetch(`${API}/salas`).then(r => r.json()),
-        fetch(`${API}/reservas/${id}`).then(r => r.json())
+      const [salasRes, reservaRes] = await Promise.all([
+        fetch(`${API}/salas`),
+        fetch(`${API}/reservas/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
-      const usuarioSelect = document.getElementById('usuarioId');
-      usuarios.forEach(u => {
-        const opt = document.createElement('option');
-        opt.value = u.id;
-        opt.textContent = u.nome;
-        if (u.id === reserva.usuarioId) opt.selected = true;
-        usuarioSelect.appendChild(opt);
-      });
+      if (!reservaRes.ok) {
+        alert("Você não tem permissão para editar esta reserva ou ela não existe.");
+        window.location.href = "reservas.html";
+        return;
+      }
+
+      const salas = await salasRes.json();
+      const reserva = await reservaRes.json();
 
       const salaSelect = document.getElementById('salaId');
       salas.forEach(s => {
@@ -111,8 +111,6 @@
       e.preventDefault();
 
       const dados = {
-        id: parseInt(id),
-        usuarioId: parseInt(document.getElementById('usuarioId').value),
         salaId: parseInt(document.getElementById('salaId').value),
         dataInicio: document.getElementById('dataInicio').value,
         dataFim: document.getElementById('dataFim').value
@@ -120,7 +118,10 @@
 
       const response = await fetch(`${API}/reservas/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(dados)
       });
 
