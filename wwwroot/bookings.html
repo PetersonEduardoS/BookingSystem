@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reservas - Sistema</title>
+    <title>Bookings - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -24,7 +24,7 @@
             margin-bottom: 30px;
         }
 
-        .reserva {
+        .booking {
             background-color: white;
             padding: 20px;
             border-radius: 12px;
@@ -35,11 +35,11 @@
             margin-right: auto;
         }
 
-            .reserva h3 {
+            .booking h3 {
                 margin: 0 0 10px;
             }
 
-            .reserva p {
+            .booking p {
                 margin: 5px 0;
             }
 
@@ -54,16 +54,16 @@
     </style>
 </head>
 <body>
-    <h1>Lista de Reservas</h1>
-    <div id="listaReservas"></div>
-    <a href="home.html">← Voltar</a>
+    <h1>Bookings</h1>
+    <div id="bookingList"></div>
+    <a href="home.html">← Back</a>
 
     <script>
     const API = 'https://localhost:7204/api'; 
     const token = localStorage.getItem('token');
     if (!token) window.location.href = 'index.html';
 
-    async function carregarReservas() {
+    async function loadBookings() {
       const res = await fetch(`${API}/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -71,27 +71,27 @@
         window.location.href = 'index.html';
         return;
       }
-      const reservas = await res.json();
-      const container = document.getElementById('listaReservas');
+      const bookings = await res.json();
+      const container = document.getElementById('bookingList');
       container.innerHTML = '';
 
-      if (reservas.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:white;">Nenhuma reserva encontrada.</p>';
+      if (bookings.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:white;">No bookings found.</p>';
         return;
       }
 
-        reservas.forEach(r => {
+        bookings.forEach(r => {
             const div = document.createElement('div');
-            div.className = 'reserva';
+            div.className = 'booking';
             div.innerHTML = `
-            <h3>${r.user.name} reservou ${r.room.name}</h3>
-            <p><strong>Início:</strong> ${formatarData(r.startDate)}</p>
-            <p><strong>Fim:</strong> ${formatarData(r.endDate)}</p>
-            <button onclick="excluirReserva(${r.id})" style="margin-top: 10px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
-              Excluir
+            <h3>${r.user.name} booked ${r.room.name}</h3>
+            <p><strong>Start:</strong> ${formatDate(r.startDate)}</p>
+            <p><strong>End:</strong> ${formatDate(r.endDate)}</p>
+            <button onclick="deleteBooking(${r.id})" style="margin-top: 10px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
+              Delete
             </button>
-            <button onclick="editarReserva(${r.id})" style="margin-top: 10px; background-color: #f1c40f; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; margin-left: 10px;">
-              Editar
+            <button onclick="editBooking(${r.id})" style="margin-top: 10px; background-color: #f1c40f; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; margin-left: 10px;">
+              Edit
             </button>
           `;
             container.appendChild(div);
@@ -99,13 +99,12 @@
 
     }
 
-    function formatarData(dataIso) {
-      const data = new Date(dataIso);
-      return data.toLocaleString('pt-BR');
+    function formatDate(isoDate) {
+      return new Date(isoDate).toLocaleString('en-IE');
     }
 
-        async function excluirReserva(id) {
-            if (!confirm('Tem certeza que deseja excluir esta reserva?')) return;
+        async function deleteBooking(id) {
+            if (!confirm('Are you sure you want to delete this booking?')) return;
 
             const response = await fetch(`${API}/bookings/${id}`, {
                 method: 'DELETE',
@@ -113,18 +112,18 @@
             });
 
             if (response.ok) {
-                alert('Reserva excluída com sucesso!');
-                carregarReservas(); 
+                alert('Booking deleted successfully!');
+                loadBookings(); 
             } else {
-                alert('Erro ao excluir reserva.');
+                alert('Could not delete booking.');
             }
         }
 
-        function editarReserva(id) {
+        function editBooking(id) {
             window.location.href = `edit-booking.html?id=${id}`;
         }
 
-    carregarReservas();
+    loadBookings();
     </script>
 </body>
 </html>

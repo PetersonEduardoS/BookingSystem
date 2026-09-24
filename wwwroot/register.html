@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastro - Sistema de Reservas</title>
+    <title>Sign Up - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -63,38 +63,38 @@
 </head>
 <body>
     <div class="container">
-        <h2>Criar Conta</h2>
-        <form id="formCadastro">
-            <input type="text" id="nomeCadastro" placeholder="Nome completo" required />
-            <input type="email" id="emailCadastro" placeholder="Email" required />
-            <input type="password" id="senhaCadastro" placeholder="Senha" required />
-            <button type="submit">Cadastrar</button>
+        <h2>Create Account</h2>
+        <form id="registerForm">
+            <input type="text" id="registerName" placeholder="Full name" required />
+            <input type="email" id="registerEmail" placeholder="Email" required />
+            <input type="password" id="registerPassword" placeholder="Password" required />
+            <button type="submit">Sign up</button>
         </form>
-        <a href="index.html">Já tem conta? Entrar</a>
+        <a href="index.html">Already have an account? Log in</a>
     </div>
 
     <script>
     const API = 'https://localhost:7204/api';
 
-    document.getElementById('formCadastro').addEventListener('submit', async (e) => {
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const nome = document.getElementById('nomeCadastro').value;
-      const email = document.getElementById('emailCadastro').value;
-      const senha = document.getElementById('senhaCadastro').value;
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
 
       const response = await fetch(`${API}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: nome, email, password: senha })
+        body: JSON.stringify({ name, email, password })
       });
 
       if (response.ok) {
-        alert("Conta criada com sucesso!");
+        alert("Account created successfully!");
         window.location.href = "index.html";
       } else {
-        const erro = await response.text();
-        alert("Erro ao cadastrar: " + erro);
+        const message = await response.text();
+        alert("Sign-up failed: " + message);
       }
     });
     </script>

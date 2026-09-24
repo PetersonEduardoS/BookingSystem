@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fazer Reserva</title>
+    <title>New Booking - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -67,16 +67,16 @@
 </head>
 <body>
     <div class="container">
-        <h2>Fazer Reserva</h2>
-        <form id="formReserva">
-            <select id="salaId" required>
-                <option value="">Selecione a sala</option>
+        <h2>New Booking</h2>
+        <form id="bookingForm">
+            <select id="roomId" required>
+                <option value="">Select a room</option>
             </select>
-            <input type="datetime-local" id="dataInicio" required />
-            <input type="datetime-local" id="dataFim" required />
-            <button type="submit">Reservar</button>
+            <input type="datetime-local" id="startDate" required />
+            <input type="datetime-local" id="endDate" required />
+            <button type="submit">Book</button>
         </form>
-        <a href="home.html">← Voltar</a>
+        <a href="home.html">← Back</a>
     </div>
 
     <script>
@@ -84,11 +84,11 @@
     const token = localStorage.getItem('token');
     if (!token) window.location.href = 'index.html';
 
-    async function carregarSalas() {
+    async function loadRooms() {
       const res = await fetch(`${API}/rooms`);
-      const salas = await res.json();
-      const select = document.getElementById('salaId');
-      salas.forEach(s => {
+      const rooms = await res.json();
+      const select = document.getElementById('roomId');
+      rooms.forEach(s => {
         const option = document.createElement('option');
         option.value = s.id;
         option.textContent = `${s.name} (cap: ${s.capacity})`;
@@ -96,13 +96,13 @@
       });
     }
 
-    document.getElementById('formReserva').addEventListener('submit', async (e) => {
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const reserva = {
-        roomId: parseInt(document.getElementById('salaId').value),
-        startDate: document.getElementById('dataInicio').value,
-        endDate: document.getElementById('dataFim').value
+      const booking = {
+        roomId: parseInt(document.getElementById('roomId').value),
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value
       };
 
       const response = await fetch(`${API}/bookings`, {
@@ -111,19 +111,19 @@
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(reserva)
+        body: JSON.stringify(booking)
       });
 
       if (response.ok) {
-        alert("Reserva realizada com sucesso!");
-        document.getElementById('formReserva').reset();
+        alert("Booking created successfully!");
+        document.getElementById('bookingForm').reset();
       } else {
-        const erro = await response.text();
-        alert("Erro: " + erro);
+        const message = await response.text();
+        alert("Error: " + message);
       }
     });
 
-    carregarSalas();
+    loadRooms();
     </script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Reserva</title>
+    <title>Edit Booking - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -63,14 +63,14 @@
 </head>
 <body>
     <div class="container">
-        <h2>Editar Reserva</h2>
-        <form id="formEditarReserva">
-            <select id="salaId" required></select>
-            <input type="datetime-local" id="dataInicio" required />
-            <input type="datetime-local" id="dataFim" required />
-            <button type="submit">Salvar Alterações</button>
+        <h2>Edit Booking</h2>
+        <form id="editBookingForm">
+            <select id="roomId" required></select>
+            <input type="datetime-local" id="startDate" required />
+            <input type="datetime-local" id="endDate" required />
+            <button type="submit">Save Changes</button>
         </form>
-        <a href="bookings.html">← Cancelar</a>
+        <a href="bookings.html">← Cancel</a>
     </div>
 
     <script>
@@ -79,41 +79,41 @@
     const token = localStorage.getItem('token');
     if (!token) window.location.href = 'index.html';
 
-    async function carregarFormulario() {
-      const [salasRes, reservaRes] = await Promise.all([
+    async function loadForm() {
+      const [roomsRes, bookingRes] = await Promise.all([
         fetch(`${API}/rooms`),
         fetch(`${API}/bookings/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
-      if (!reservaRes.ok) {
-        alert("Você não tem permissão para editar esta reserva ou ela não existe.");
+      if (!bookingRes.ok) {
+        alert("You cannot edit this booking or it does not exist.");
         window.location.href = "bookings.html";
         return;
       }
 
-      const salas = await salasRes.json();
-      const reserva = await reservaRes.json();
+      const rooms = await roomsRes.json();
+      const booking = await bookingRes.json();
 
-      const salaSelect = document.getElementById('salaId');
-      salas.forEach(s => {
+      const roomSelect = document.getElementById('roomId');
+      rooms.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s.id;
         opt.textContent = s.name;
-        if (s.id === reserva.roomId) opt.selected = true;
-        salaSelect.appendChild(opt);
+        if (s.id === booking.roomId) opt.selected = true;
+        roomSelect.appendChild(opt);
       });
 
-      document.getElementById('dataInicio').value = reserva.startDate.slice(0,16);
-      document.getElementById('dataFim').value = reserva.endDate.slice(0,16);
+      document.getElementById('startDate').value = booking.startDate.slice(0,16);
+      document.getElementById('endDate').value = booking.endDate.slice(0,16);
     }
 
-    document.getElementById('formEditarReserva').addEventListener('submit', async (e) => {
+    document.getElementById('editBookingForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const dados = {
-        roomId: parseInt(document.getElementById('salaId').value),
-        startDate: document.getElementById('dataInicio').value,
-        endDate: document.getElementById('dataFim').value
+      const payload = {
+        roomId: parseInt(document.getElementById('roomId').value),
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value
       };
 
       const response = await fetch(`${API}/bookings/${id}`, {
@@ -122,19 +122,19 @@
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(dados)
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
-        alert("Reserva atualizada com sucesso!");
+        alert("Booking updated successfully!");
         window.location.href = "bookings.html";
       } else {
-        const erro = await response.text();
-        alert("Erro: " + erro);
+        const message = await response.text();
+        alert("Error: " + message);
       }
     });
 
-    carregarFormulario();
+    loadForm();
     </script>
 </body>
 </html>

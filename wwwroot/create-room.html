@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastro de Sala - Sistema de Reservas</title>
+    <title>Create Room - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -67,13 +67,13 @@
 </head>
 <body>
     <div class="container">
-        <h2>Cadastrar Nova Sala</h2>
-        <form id="formSala">
-            <input type="text" id="nomeSala" placeholder="Nome da Sala" required />
-            <input type="number" id="capacidadeSala" placeholder="Capacidade" required />
-            <button type="submit">Cadastrar</button>
+        <h2>Create a New Room</h2>
+        <form id="roomForm">
+            <input type="text" id="roomName" placeholder="Room name" required />
+            <input type="number" id="roomCapacity" placeholder="Capacity" required />
+            <button type="submit">Create</button>
         </form>
-        <a href="home.html">← Voltar para o início</a>
+        <a href="home.html">← Back to home</a>
     </div>
 
     <script>
@@ -81,11 +81,11 @@
     const token = localStorage.getItem('token');
     if (!token) window.location.href = 'index.html';
 
-    document.getElementById('formSala').addEventListener('submit', async (e) => {
+    document.getElementById('roomForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const nome = document.getElementById('nomeSala').value;
-      const capacidade = parseInt(document.getElementById('capacidadeSala').value);
+      const name = document.getElementById('roomName').value;
+      const capacity = parseInt(document.getElementById('roomCapacity').value);
 
       const response = await fetch(`${API}/rooms`, {
         method: 'POST',
@@ -93,15 +93,15 @@
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ name: nome, capacity: capacidade })
+        body: JSON.stringify({ name, capacity })
       });
 
       if (response.ok) {
-        alert("Sala cadastrada com sucesso!");
-        document.getElementById('formSala').reset();
+        alert("Room created successfully!");
+        document.getElementById('roomForm').reset();
       } else {
-        const erro = await response.text();
-        alert("Erro ao cadastrar sala: " + erro);
+        const message = await response.text();
+        alert("Could not create room: " + message);
       }
     });
     </script>

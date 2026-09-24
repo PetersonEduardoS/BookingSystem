@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Usuário</title>
+    <title>Edit User - Booking System</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -63,18 +63,18 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>Editar Usuário</h2>
+        <h2>Edit User</h2>
         <form id="editForm">
-            <input type="text" id="nome" placeholder="Nome" required />
+            <input type="text" id="name" placeholder="Name" required />
             <input type="email" id="email" placeholder="Email" required />
-            <input type="password" id="senha" placeholder="Nova Senha (opcional)" />
+            <input type="password" id="password" placeholder="New password (optional)" />
             <select id="role">
-                <option value="user">Usuário</option>
-                <option value="admin">Administrador</option>
+                <option value="user">User</option>
+                <option value="admin">Administrator</option>
             </select>
-            <button type="submit">Salvar</button>
+            <button type="submit">Save</button>
         </form>
-        <button class="back-btn" onclick="window.location.href='manage-users.html'">Voltar</button>
+        <button class="back-btn" onclick="window.location.href='manage-users.html'">Back</button>
     </div>
 
     <script>
@@ -82,7 +82,7 @@
         const params = new URLSearchParams(window.location.search);
         const userId = params.get("id");
 
-        async function carregarUsuario() {
+        async function loadUser() {
             const token = localStorage.getItem("token");
             if (!token) return window.location.href = "index.html";
 
@@ -90,12 +90,12 @@
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            if (!res.ok) return alert("Erro ao carregar usuário.");
+            if (!res.ok) return alert("Could not load user.");
 
-            const usuario = await res.json();
-            document.getElementById("nome").value = usuario.name;
-            document.getElementById("email").value = usuario.email;
-            document.getElementById("role").value = usuario.role || "user";
+            const user = await res.json();
+            document.getElementById("name").value = user.name;
+            document.getElementById("email").value = user.email;
+            document.getElementById("role").value = user.role || "user";
         }
 
         document.getElementById("editForm").addEventListener("submit", async (e) => {
@@ -104,18 +104,18 @@
             const token = localStorage.getItem("token");
             if (!token) return;
 
-            const nome = document.getElementById("nome").value;
+            const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
-            const senha = document.getElementById("senha").value;
+            const password = document.getElementById("password").value;
             const role = document.getElementById("role").value;
 
             const payload = {
-                name: nome,
+                name,
                 email,
                 role,
             };
 
-            if (senha.trim()) payload.password = senha;
+            if (password.trim()) payload.password = password;
 
             try {
                 const res = await fetch(`${API}/users/${userId}`, {
@@ -128,18 +128,18 @@
                 });
 
                 if (res.ok) {
-                    alert("Usuário atualizado com sucesso!");
+                    alert("User updated successfully!");
                     window.location.href = "manage-users.html";
                 } else {
-                    alert("Erro ao atualizar usuário.");
+                    alert("Could not update user.");
                 }
             } catch (err) {
-                console.error("Erro:", err);
-                alert("Erro ao enviar requisição.");
+                console.error("Error:", err);
+                alert("Could not send the request.");
             }
         });
 
-        carregarUsuario();
+        loadUser();
     </script>
 </body>
 </html>

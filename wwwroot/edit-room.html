@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Editar Sala</title>
+    <title>Edit Room - Booking System</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -63,45 +63,45 @@
 </head>
 <body>
     <div class="form-container">
-        <h2>Editar Sala</h2>
-        <form id="editSalaForm">
-            <input type="text" id="nome" placeholder="Nome da Sala" required />
-            <input type="number" id="capacidade" placeholder="Capacidade" min="1" required />
-            <button type="submit">Salvar</button>
+        <h2>Edit Room</h2>
+        <form id="editRoomForm">
+            <input type="text" id="name" placeholder="Room name" required />
+            <input type="number" id="capacity" placeholder="Capacity" min="1" required />
+            <button type="submit">Save</button>
         </form>
-        <button class="back-btn" onclick="window.location.href='manage-rooms.html'">Voltar</button>
+        <button class="back-btn" onclick="window.location.href='manage-rooms.html'">Back</button>
     </div>
 
     <script>
         const API = "https://localhost:7204/api";
         const params = new URLSearchParams(window.location.search);
-        const salaId = params.get("id");
+        const roomId = params.get("id");
 
-        async function carregarSala() {
+        async function loadRoom() {
             const token = localStorage.getItem("token");
             if (!token) return window.location.href = "index.html";
 
-            const res = await fetch(`${API}/rooms/${salaId}`, {
+            const res = await fetch(`${API}/rooms/${roomId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            if (!res.ok) return alert("Sala não encontrada.");
+            if (!res.ok) return alert("Room not found.");
 
-            const sala = await res.json();
-            document.getElementById("nome").value = sala.name;
-            document.getElementById("capacidade").value = sala.capacity;
+            const room = await res.json();
+            document.getElementById("name").value = room.name;
+            document.getElementById("capacity").value = room.capacity;
         }
 
-        document.getElementById("editSalaForm").addEventListener("submit", async (e) => {
+        document.getElementById("editRoomForm").addEventListener("submit", async (e) => {
             e.preventDefault();
 
             const token = localStorage.getItem("token");
-            const nome = document.getElementById("nome").value;
-            const capacidade = parseInt(document.getElementById("capacidade").value);
+            const name = document.getElementById("name").value;
+            const capacity = parseInt(document.getElementById("capacity").value);
 
-            const payload = { id: parseInt(salaId), name: nome, capacity: capacidade };
+            const payload = { id: parseInt(roomId), name, capacity };
 
-            const res = await fetch(`${API}/rooms/${salaId}`, {
+            const res = await fetch(`${API}/rooms/${roomId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -111,14 +111,14 @@
             });
 
             if (res.ok) {
-                alert("Sala atualizada com sucesso!");
+                alert("Room updated successfully!");
                 window.location.href = "manage-rooms.html";
             } else {
-                alert("Erro ao atualizar sala.");
+                alert("Could not update room.");
             }
         });
 
-        carregarSala();
+        loadRoom();
     </script>
 </body>
 </html>

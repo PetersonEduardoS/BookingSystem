@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lista de Salas</title>
+    <title>Room List - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -23,7 +23,7 @@
             margin-bottom: 30px;
         }
 
-        .sala {
+        .room {
             background-color: white;
             color: #333;
             padding: 20px;
@@ -35,11 +35,11 @@
             margin-right: auto;
         }
 
-            .sala h3 {
+            .room h3 {
                 margin: 0 0 10px;
             }
 
-            .sala p {
+            .room p {
                 margin: 5px 0;
             }
 
@@ -54,36 +54,36 @@
     </style>
 </head>
 <body>
-    <h1>Salas Cadastradas</h1>
-    <div id="listaSalas"></div>
-    <a href="home.html">← Voltar</a>
+    <h1>Rooms</h1>
+    <div id="roomList"></div>
+    <a href="home.html">← Back</a>
 
     <script>
     const API = 'https://localhost:7204/api'; 
 
-    async function carregarSalas() {
+    async function loadRooms() {
       const res = await fetch(`${API}/rooms`);
-      const salas = await res.json();
-      const container = document.getElementById('listaSalas');
+      const rooms = await res.json();
+      const container = document.getElementById('roomList');
       container.innerHTML = '';
 
-      if (salas.length === 0) {
-        container.innerHTML = '<p style="text-align:center;">Nenhuma sala cadastrada.</p>';
+      if (rooms.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">No rooms yet.</p>';
         return;
       }
 
-      salas.forEach(s => {
+      rooms.forEach(s => {
         const div = document.createElement('div');
-        div.className = 'sala';
+        div.className = 'room';
         div.innerHTML = `
           <h3>${s.name}</h3>
-          <p><strong>Capacidade:</strong> ${s.capacity}</p>
+          <p><strong>Capacity:</strong> ${s.capacity}</p>
         `;
         container.appendChild(div);
       });
     }
 
-    carregarSalas();
+    loadRooms();
     </script>
 </body>
 </html>

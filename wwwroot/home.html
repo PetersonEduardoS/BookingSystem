@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Sistema de Reservas</title>
+    <title>Dashboard - Booking System</title>
     <style>
         * {
             box-sizing: border-box;
@@ -56,21 +56,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>Bem-vindo ao Sistema de Reservas</h1>
+        <h1>Welcome to the Booking System</h1>
 
-        <!-- Botões visíveis para todos -->
-        <button class="btn" onclick="location.href='create-room.html'">Cadastrar Sala</button>
-        <button class="btn" onclick="location.href='rooms.html'">Lista de Salas</button>
-        <button class="btn" onclick="location.href='new-booking.html'">Fazer Reserva</button>
-        <button class="btn" onclick="location.href='bookings.html'">Ver Reservas</button>
+        <!-- Buttons visible to every logged-in user -->
+        <button class="btn" onclick="location.href='create-room.html'">Create Room</button>
+        <button class="btn" onclick="location.href='rooms.html'">Room List</button>
+        <button class="btn" onclick="location.href='new-booking.html'">New Booking</button>
+        <button class="btn" onclick="location.href='bookings.html'">View Bookings</button>
 
 
-        <!-- Botões apenas para admin -->
+        <!-- Admin-only buttons -->
         <div id="admin-area" style="display: none; margin-top: 20px;">
             <hr />
-            <h3>Área Administrativa</h3>
-            <button class="btn" onclick="location.href='manage-users.html'">Gerenciar Usuários</button>
-            <button class="btn" onclick="location.href='manage-rooms.html'">Editar/Excluir Salas</button>
+            <h3>Admin Area</h3>
+            <button class="btn" onclick="location.href='manage-users.html'">Manage Users</button>
+            <button class="btn" onclick="location.href='manage-rooms.html'">Manage Rooms</button>
         </div>
         <button class="btn" onclick="logout()" style="background-color: #e74c3c;">Logout</button>
     </div>
@@ -87,12 +87,12 @@
 
                 return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || null;
             } catch (e) {
-                console.error("Erro ao decodificar token:", e);
+                console.error("Could not decode token:", e);
                 return null;
             }
         }
 
-        function exibirSecoes() {
+        function showSections() {
             const role = getUserRole();
             if (role === "admin") {
                 document.getElementById("admin-area").style.display = "block";
@@ -104,7 +104,7 @@
             window.location.href = "index.html";
         }
 
-        window.onload = exibirSecoes;
+        window.onload = showSections;
     </script>
 </body>
 </html>
