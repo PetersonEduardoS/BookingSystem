@@ -15,8 +15,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 🔐 Configuração do JWT
-var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+// JWT configuration: the signing key comes from appsettings.Development.json (local demo),
+// dotnet user-secrets or environment variables. It is never stored in appsettings.json.
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32)
+{
+    throw new InvalidOperationException(
+        "Jwt:Key must be configured with at least 32 characters. Use dotnet user-secrets or an environment variable.");
+}
+var key = Encoding.UTF8.GetBytes(jwtKey);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

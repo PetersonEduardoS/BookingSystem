@@ -54,7 +54,7 @@ namespace BookingSystem.Controllers
 
         private string GerarToken(Usuario usuario)
         {
-            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
             var cred = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
