@@ -9,17 +9,17 @@ namespace BookingSystem.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configura os relacionamentos
-            modelBuilder.Entity<Reserva>()
+            modelBuilder.Entity<Booking>()
                 .HasOne(r => r.User)
                 .WithMany()
                 .HasForeignKey(r => r.UserId);
 
-            modelBuilder.Entity<Reserva>()
+            modelBuilder.Entity<Booking>()
                 .HasOne(r => r.Room)
                 .WithMany()
                 .HasForeignKey(r => r.RoomId);

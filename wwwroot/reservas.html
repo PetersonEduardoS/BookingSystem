@@ -64,7 +64,7 @@
     if (!token) window.location.href = 'index.html';
 
     async function carregarReservas() {
-      const res = await fetch(`${API}/reservas`, {
+      const res = await fetch(`${API}/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.status === 401) {
@@ -85,8 +85,8 @@
             div.className = 'reserva';
             div.innerHTML = `
             <h3>${r.user.name} reservou ${r.room.name}</h3>
-            <p><strong>Início:</strong> ${formatarData(r.dataInicio)}</p>
-            <p><strong>Fim:</strong> ${formatarData(r.dataFim)}</p>
+            <p><strong>Início:</strong> ${formatarData(r.startDate)}</p>
+            <p><strong>Fim:</strong> ${formatarData(r.endDate)}</p>
             <button onclick="excluirReserva(${r.id})" style="margin-top: 10px; background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">
               Excluir
             </button>
@@ -107,7 +107,7 @@
         async function excluirReserva(id) {
             if (!confirm('Tem certeza que deseja excluir esta reserva?')) return;
 
-            const response = await fetch(`${API}/reservas/${id}`, {
+            const response = await fetch(`${API}/bookings/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });

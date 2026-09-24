@@ -101,11 +101,11 @@
 
       const reserva = {
         roomId: parseInt(document.getElementById('salaId').value),
-        dataInicio: document.getElementById('dataInicio').value,
-        dataFim: document.getElementById('dataFim').value
+        startDate: document.getElementById('dataInicio').value,
+        endDate: document.getElementById('dataFim').value
       };
 
-      const response = await fetch(`${API}/reservas`, {
+      const response = await fetch(`${API}/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

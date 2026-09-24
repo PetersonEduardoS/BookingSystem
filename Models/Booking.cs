@@ -2,7 +2,7 @@
 
 namespace BookingSystem.Models
 {
-    public class Reserva
+    public class Booking
     {
         public int Id { get; set; }
 
@@ -12,7 +12,7 @@ namespace BookingSystem.Models
         public int RoomId { get; set; }
         public Room? Room { get; set; }
 
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
