@@ -115,12 +115,12 @@ namespace BookingSystem.Controllers
         {
             if (endDate <= startDate)
             {
-                return "A data de fim deve ser posterior à data de início.";
+                return "The end date must be after the start date.";
             }
 
             if (!await _context.Rooms.AnyAsync(r => r.Id == roomId))
             {
-                return "Sala não encontrada.";
+                return "Room not found.";
             }
 
             var hasConflict = await _context.Bookings
@@ -130,7 +130,7 @@ namespace BookingSystem.Controllers
                     b.StartDate < endDate &&
                     startDate < b.EndDate);
 
-            return hasConflict ? "Já existe uma reserva para essa sala nesse horário." : null;
+            return hasConflict ? "This room is already booked for that time." : null;
         }
     }
 }

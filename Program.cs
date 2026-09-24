@@ -56,7 +56,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.UseAuthentication(); // 👈 sempre antes
+app.UseAuthentication(); // must run before UseAuthorization
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

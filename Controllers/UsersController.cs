@@ -40,16 +40,16 @@ namespace BookingSystem.Controllers
                 string.IsNullOrWhiteSpace(request.Email) ||
                 string.IsNullOrWhiteSpace(request.Password))
             {
-                return BadRequest("Nome, email e senha são obrigatórios.");
+                return BadRequest("Name, email and password are required.");
             }
 
             var normalizedEmail = request.Email.Trim().ToLower();
 
-            // Verifica se já existe um usuário com o mesmo e-mail
+            // Reject duplicate emails
             var exists = await _context.Users.AnyAsync(u => u.Email.ToLower() == normalizedEmail);
             if (exists)
             {
-                return Conflict("Já existe um usuário com este e-mail.");
+                return Conflict("A user with this email already exists.");
             }
 
             var user = new User

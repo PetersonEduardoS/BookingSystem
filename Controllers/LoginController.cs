@@ -29,7 +29,7 @@ namespace BookingSystem.Controllers
         {
             if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
             {
-                return BadRequest("Email e senha são obrigatórios.");
+                return BadRequest("Email and password are required.");
             }
 
             var email = request.Email.Trim().ToLower();
@@ -38,16 +38,16 @@ namespace BookingSystem.Controllers
             if (user == null || string.IsNullOrEmpty(user.PasswordHash))
             {
                 _logger.LogWarning("Failed login attempt for {Email}", email);
-                return Unauthorized("Email ou senha inválidos");
+                return Unauthorized("Invalid email or password.");
             }
 
-            // Verificação com BCrypt
+            // Verify the password against the stored BCrypt hash
             bool passwordOk = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
 
             if (!passwordOk)
             {
                 _logger.LogWarning("Failed login attempt for {Email}", email);
-                return Unauthorized("Email ou senha inválidos");
+                return Unauthorized("Invalid email or password.");
             }
 
             var token = GenerateToken(user);

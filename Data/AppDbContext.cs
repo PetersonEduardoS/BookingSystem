@@ -13,7 +13,7 @@ namespace BookingSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configura os relacionamentos
+            // Relationships
             modelBuilder.Entity<Booking>()
                 .HasOne(r => r.User)
                 .WithMany()
