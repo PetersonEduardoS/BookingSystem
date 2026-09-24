@@ -62,26 +62,10 @@ namespace BookingSystem.Controllers
             reserva.Usuario = null;
             reserva.Sala = null;
 
-            if (reserva.DataFim <= reserva.DataInicio)
+            var validationError = await ValidateReservaAsync(reserva.SalaId, reserva.DataInicio, reserva.DataFim);
+            if (validationError != null)
             {
-                return BadRequest("A data de fim deve ser posterior à data de início.");
-            }
-
-            if (!await _context.Salas.AnyAsync(s => s.Id == reserva.SalaId))
-            {
-                return BadRequest("Sala não encontrada.");
-            }
-
-            // Verifica conflito de horário na mesma sala
-            var conflito = await _context.Reservas
-                .AnyAsync(r =>
-                    r.SalaId == reserva.SalaId &&
-                    r.DataInicio < reserva.DataFim &&
-                    reserva.DataInicio < r.DataFim);
-
-            if (conflito)
-            {
-                return BadRequest("Já existe uma reserva para essa sala nesse horário.");
+                return BadRequest(validationError);
             }
 
             _context.Reservas.Add(reserva);
@@ -101,6 +85,30 @@ namespace BookingSystem.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // Shared rules for creating and updating a reservation.
+        // ignoreReservaId excludes the reservation being edited from the conflict check.
+        private async Task<string?> ValidateReservaAsync(int salaId, DateTime dataInicio, DateTime dataFim, int? ignoreReservaId = null)
+        {
+            if (dataFim <= dataInicio)
+            {
+                return "A data de fim deve ser posterior à data de início.";
+            }
+
+            if (!await _context.Salas.AnyAsync(s => s.Id == salaId))
+            {
+                return "Sala não encontrada.";
+            }
+
+            var conflito = await _context.Reservas
+                .AnyAsync(r =>
+                    r.Id != ignoreReservaId &&
+                    r.SalaId == salaId &&
+                    r.DataInicio < dataFim &&
+                    dataInicio < r.DataFim);
+
+            return conflito ? "Já existe uma reserva para essa sala nesse horário." : null;
         }
     }
 }
